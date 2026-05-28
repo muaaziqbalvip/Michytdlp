@@ -1,0 +1,50 @@
+name: MiTV 24-7 Stream Extractor
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
+
+jobs:
+
+  extractor:
+
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 360
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install yt-dlp
+        run: |
+          python -m pip install --upgrade pip
+          pip install yt-dlp requests
+
+      - name: Start Infinite Refresh Loop
+        run: |
+
+          while true
+          do
+
+            echo "================================="
+            echo "MiTV Network Refresh Started"
+            echo "================================="
+
+            python scripts/extractor.py
+
+            echo "Sleeping For 20 Minutes..."
+
+            sleep 1200
+
+            echo "Restarting Extraction..."
+
+          done
