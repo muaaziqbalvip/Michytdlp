@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "functions": {
+    "api/play.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/play",
+      "dest": "/api/play.js"
+    }
+  ]
+}
