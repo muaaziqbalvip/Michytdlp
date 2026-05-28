@@ -1,0 +1,12 @@
+{
+  "name": "mitv-network",
+  "version": "1.0.0",
+  "description": "MiTV Network - MUSLIM ISLAM IPTV Backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node api/play.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.2"
+  }
+}
