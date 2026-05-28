@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MiTV Network - MUSLIM ISLAM</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#050505;
+    font-family:'Poppins',sans-serif;
+    color:white;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.background{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:
+    radial-gradient(circle at top left,#00ffcc22,transparent 40%),
+    radial-gradient(circle at bottom right,#ff00ff22,transparent 40%),
+    #050505;
+    z-index:-1;
+}
+
+.container{
+    width:95%;
+    max-width:550px;
+    background:#101010;
+    border:1px solid #222;
+    border-radius:25px;
+    padding:40px;
+    box-shadow:
+    0 0 30px rgba(0,255,204,0.1),
+    0 0 60px rgba(0,255,204,0.05);
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.logo h1{
+    font-size:36px;
+    font-weight:700;
+    background:linear-gradient(90deg,#00ffcc,#00aaff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.logo p{
+    color:#999;
+    margin-top:8px;
+}
+
+.form-group{
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    margin-bottom:10px;
+    font-size:15px;
+    color:#ccc;
+}
+
+input,select{
+    width:100%;
+    padding:16px;
+    background:#181818;
+    border:1px solid #333;
+    border-radius:15px;
+    color:white;
+    font-size:15px;
+    outline:none;
+    transition:0.3s;
+}
+
+input:focus,
+select:focus{
+    border-color:#00ffcc;
+    box-shadow:0 0 10px rgba(0,255,204,0.2);
+}
+
+button{
+    width:100%;
+    padding:18px;
+    border:none;
+    border-radius:15px;
+    background:linear-gradient(90deg,#00ffcc,#00aaff);
+    color:black;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(0,255,204,0.2);
+}
+
+.status{
+    margin-top:25px;
+    text-align:center;
+    font-size:14px;
+    color:#00ffcc;
+}
+
+.footer{
+    margin-top:30px;
+    text-align:center;
+    color:#666;
+    font-size:13px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="container">
+
+    <div class="logo">
+        <h1>MiTV Network</h1>
+        <p>MUSLIM ISLAM IPTV CONTROL PANEL</p>
+    </div>
+
+    <div class="form-group">
+        <label>YouTube URL</label>
+        <input type="text" id="youtube_url" placeholder="https://youtube.com/live/...">
+    </div>
+
+    <div class="form-group">
+        <label>Stream Type</label>
+        <select id="stream_type">
+            <option value="live">24/7 Live Stream (.m3u8)</option>
+            <option value="video">Normal Video (.mp4)</option>
+        </select>
+    </div>
+
+    <button onclick="saveConfig()">
+        SAVE STREAM CONFIGURATION
+    </button>
+
+    <div class="status" id="status"></div>
+
+    <div class="footer">
+        Powered By MiTV Network • MUSLIM ISLAM
+    </div>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script>
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBbnU8DkthpYQMHOLLyj6M0cc05qXfjMcw",
+    authDomain: "ramadan-2385b.firebaseapp.com",
+    databaseURL: "https://ramadan-2385b-default-rtdb.firebaseio.com",
+    projectId: "ramadan-2385b",
+    storageBucket: "ramadan-2385b.firebasestorage.app",
+    messagingSenderId: "882828936310",
+    appId: "1:882828936310:web:7f97b921031fe130fe4b57"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.database();
+
+async function saveConfig(){
+
+    const youtube_url = document.getElementById('youtube_url').value.trim();
+    const type = document.getElementById('stream_type').value;
+    const status = document.getElementById('status');
+
+    if(!youtube_url){
+        status.innerHTML = "Please enter YouTube URL";
+        return;
+    }
+
+    status.innerHTML = "Saving Configuration...";
+
+    try{
+
+        await db.ref('stream_config').set({
+            youtube_url: youtube_url,
+            type: type,
+            updated_at: Date.now()
+        });
+
+        status.innerHTML = "Configuration Saved Successfully";
+
+    }catch(error){
+
+        status.innerHTML = error.message;
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
