@@ -1,0 +1,11 @@
+{
+  "stream_config": {
+    "youtube_url": "",
+    "type": "live"
+  },
+  "live_links": {
+    "direct_url": "",
+    "timestamp": 0,
+    "status": "offline"
+  }
+}
